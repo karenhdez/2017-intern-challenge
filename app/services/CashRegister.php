@@ -27,6 +27,12 @@ class CashRegister
 
     public function getProductTotal(Order $order)
     {
-        
+        $total = 0;
+        $products = $order->products()->get();
+        foreach ($products as $product){
+            $total = $total + ($product->amount * $product->quantity);
+        }
+        $amount = new Money($total, new Currency('USD'));
+        return $amount;   
     }
 }
